@@ -70,11 +70,7 @@ public class SampleOssan1 {
 			}
 
 			//明らかなノイズは除く
-			if((isEqual(csv[PosUtils.MONTH],1)&&isEqual(csv[PosUtils.DATE],1))||
-				(isEqual(csv[PosUtils.MONTH],2)&&isEqual(csv[PosUtils.DATE],24,25))||
-				(isEqual(csv[PosUtils.MONTH],3,12)&&isEqual(csv[PosUtils.DATE],14))){
-				return;
-			}
+			if(isNoisyDay(csv[PosUtils.MONTH],csv[PosUtils.DATE]))return;
 
 			// valueとなる販売個数を取得
 			Long count = Long.parseLong(csv[PosUtils.ITEM_TOTAL_PRICE]);
@@ -93,6 +89,13 @@ public class SampleOssan1 {
 			return (Integer.valueOf(str)==num1)||(Integer.valueOf(str)==num2);
 		}
 
+		private static boolean isNoisyDay(String month,String date){
+			if((isEqual(month,1)&&isEqual(date,1))||
+					(isEqual(month,12)&&isEqual(date,24,25))||
+					(isEqual(month,2)&&isEqual(date,14))||
+					(isEqual(month,3)&&isEqual(date,14))) return true;
+			else return false;
+		}
 	}
 
 
